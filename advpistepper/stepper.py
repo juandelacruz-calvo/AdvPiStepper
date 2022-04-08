@@ -60,9 +60,12 @@ class AdvPiStepper(object):
         self.parameters = params  # keep the current parameters for reference
 
     def __del__(self):
-        if self.process.is_alive():
-            # terminate the stepper process
-            self.close()
+        try:
+            if self.process.is_alive():
+                # terminate the stepper process
+                self.close()
+        except:
+            pass
 
     @property
     def current_position(self) -> int:
@@ -247,7 +250,7 @@ class AdvPiStepper(object):
                 f"Given microstep setting ({steps}) is not valid. Options are {self.parameters[MICROSTEP_OPTIONS]}")
 
         self._send_cmd(Verb.MICROSTEPS, steps)
-        ready = self.r_pipe.poll(1.0)    # Should not time out - just in case
+        ready = self.r_pipe.poll(1.0)  # Should not time out - just in case
         if ready:
             retval = self.r_pipe.recv()
             # todo do something with the returned value, which is the position at which the step change
@@ -303,7 +306,7 @@ class AdvPiStepper(object):
         if block:
             self._wait_for_idle()
 
-    def move_to(self, position: int, speed: float=None, block: bool=False):
+    def move_to(self, position: int, speed: float = None, block: bool = False):
         """
         Move to the given absolute location.
 

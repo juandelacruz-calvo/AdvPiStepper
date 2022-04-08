@@ -608,7 +608,7 @@ class StepperProcess(multiprocessing.Process):
         delay = self.calculate_delay
 
         try:
-            while not self.quit_now:
+            while not self.quit_now or not self.driver.is_engaged():
 
                 wave = self.driver.perform_step(delay)
                 self.pi.wave_add_generic(wave)

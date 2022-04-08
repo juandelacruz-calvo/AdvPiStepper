@@ -146,6 +146,9 @@ class DriverBase(object):
         """Deenergize all coils."""
         self.engaged = False
 
+    def is_engaged(self):
+        return self.engaged
+
     @property
     def direction(self) -> int:
         """The current direction of the motor.

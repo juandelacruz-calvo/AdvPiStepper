@@ -130,15 +130,18 @@ class DriverStepDirGeneric(DriverBase):
         pi.write(self._gpio_dir_pin, 0)
 
     def engage(self):
-        """Energize the coils."""
-        self.engaged = True
+        """Energize the coils.
+        The base implementation does not do anything. Subclasses may override this method
+        to set an enable pin as required.
+        """
+        pass
 
     def release(self):
-        """Deenergize all coils."""
-        self.engaged = False
-
-    def is_engaged(self):
-        return self.engaged
+        """Deenergize all coils.
+        The base implementation does not do anything. Subclasses may override this method
+        to clear an enable pin as required.
+        """
+        pass
 
     def hard_stop(self):
         """Perform a hard stop where the motor is stop immediately, even

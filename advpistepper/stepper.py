@@ -490,7 +490,7 @@ class AdvPiStepper(object):
         cmd = Command(verb, noun)
         logging.debug(f"Frontend: send command {cmd}")
         self.c_pipe.send(cmd)
-        ack = self.c_pipe.poll(3.0)  # 3 seconds is rather long but required when accessing a remote Pi.
+        ack = self.c_pipe.poll(0.3)  # 3 seconds is rather long but required when accessing a remote Pi.
         if ack:
             retval = self.c_pipe.recv()
             logging.debug(f"Frontend: cmd {cmd} acknowledged")
